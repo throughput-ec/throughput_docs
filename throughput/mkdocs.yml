@@ -1,0 +1,23 @@
+site_name: Throughput Documentation
+site_url: http://throughputdb.com/docs
+repo_url: https://github.com/throughput-ec/throughput_docs
+repo_name: Github
+site_author: Simon Goring
+
+markdown_extensions:
+    - toc:
+        permalink: True
+
+nav:
+  - Home: index.md
+  - 'Data Elements':
+    - OBJECTs: nodes/objects.md
+    - Keywords: keywords/keywords.md
+  - 'Data Models': models/data_models.md
+
+theme:
+  name: mkdocs
+  highlightjs: true
+  hljs_languages:
+    - R
+    - SQL
