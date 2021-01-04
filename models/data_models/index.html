@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Simon Goring">
+        <link rel="canonical" href="http://throughputdb.com/docs/models/data_models/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Data Models - Throughput Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/SQL.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Throughput Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Data Elements <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../nodes/objects/" class="dropdown-item">OBJECTs</a>
+</li>
+                                    
+<li>
+    <a href="../../keywords/keywords/" class="dropdown-item">Keywords</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Data Models</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../../keywords/keywords/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/throughput-ec/throughput_docs/edit/master/docs/models/data_models.md" class="nav-link">Edit on Github</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#data-models" class="nav-link">Data Models</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#data-use-and-reuse" class="nav-link">Data Use and Reuse</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#paper-to-code-connections" class="nav-link">Paper-to-Code Connections</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#text-to-dataset-connections" class="nav-link">Text-to-Dataset Connections</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#credit-tracking" class="nav-link">Credit Tracking</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="data-models">Data Models<a class="headerlink" href="#data-models" title="Permanent link">&para;</a></h1>
+<p>Currently there are several models for relationships within Throughput:</p>
+<ul>
+<li>Data Use and Reuse<ul>
+<li>Databases linked to code repositories</li>
+<li>Papers linked to GitHub code repositories</li>
+<li>Text annotations linked to datasets (linked to databases)</li>
+</ul>
+</li>
+<li>Credit tracking<ul>
+<li>Grants linked to databases</li>
+<li>Grants linked to code repositories</li>
+<li>Grants linked to papers</li>
+</ul>
+</li>
+</ul>
+<h2 id="data-use-and-reuse">Data Use and Reuse<a class="headerlink" href="#data-use-and-reuse" title="Permanent link">&para;</a></h2>
+<p>Throughput aims to help people find ways to use data that meet their needs as
+a researcher.  For example, we want to help early-career researchers find ways
+to undertake multidisciplinary analysis that combines climate data and information
+about land use.  To do this, a student must find the appropriate data resources
+and then understand how to undertake analysis on these resources.</p>
+<h3 id="database-to-code-connections">Data(base)-to-Code Connections<a class="headerlink" href="#database-to-code-connections" title="Permanent link">&para;</a></h3>
+<p>A research database may have many uses, through APIs, direct data downloads, or
+SQL connections to the databases. Throughput links to each repository that uses
+a particular data resource.  This code is publicly available at the Throughput
+<a href="https://github.com/throughput-ec/github_scrapers/tree/master/re3scraper">re3 scraper repository</a>.</p>
+<p>Using <code>schema:DataCatalog</code> <code>OBJECT</code> nodes we can create an annotation that
+links to a <code>schema:CodeRepository</code> <code>OBJECT</code>.  The <code>ANNOTATION</code> node
+identifies the link between the two records, and can be supplemented with an
+<code>OBJECT</code> node of <code>TYPE</code> <em>TextualBody</em>.  This last object has an explanation
+of why the annotation was made.</p>
+<p>The annotation includes information about the <code>AGENT</code> that has generated the
+annotation.  This may include either an individual who created the specific annotation,
+or a set of annotations generated programatically.  The <code>AGENT</code> can be
+identified using the <code>AGENTTYPE</code>.</p>
+<p><img alt="" src="../dbcon.svg" /></p>
+<h4 id="sample-query">Sample Query<a class="headerlink" href="#sample-query" title="Permanent link">&para;</a></h4>
+<pre><code class="language-coffeescript"># Search for all code repositories linked to a database:
+MATCH (n:OBJECT)-[:isType]-(:TYPE {type:&quot;schema:DataCatalog&quot;})
+  WHERE n.name CONTAINS &quot;searchTerm&quot;
+  MATCH (o:OBJECT)-[:isType]-(:TYPE {type:&quot;schema:CodeRepository&quot;})
+  WITH n, o
+  MATCH p=(n)-[]-(:ANNOTATION)-[:Target]-(o)
+  RETURN p
+  LIMIT 10
+</code></pre>
+<h2 id="paper-to-code-connections">Paper-to-Code Connections<a class="headerlink" href="#paper-to-code-connections" title="Permanent link">&para;</a></h2>
+<p>Research papers contain detailed methodologies that are supported by peer reviewed
+literature.  This supporting information may be lost when users rely only on
+the code.  By linking code in code repositories to published articles, and the
+published articles to the code repositories, we make both more discoverable, and
+provide a clear link, and attribution to the citation itself.</p>
+<p><img alt="" src="../papercon.svg" /></p>
+<p>Using <code>schema:Article</code> <code>OBJECT</code> nodes we can create an annotation that
+links to a <code>schema:CodeRepository</code> <code>OBJECT</code>.  The <code>ANNOTATION</code> node
+identifies the link between the two records, and can be supplemented with an
+<code>OBJECT</code> node of <code>TYPE</code> <em>TextualBody</em>.  This last object has an explanation
+of why the annotation was made.</p>
+<p>The annotation includes information about the <code>AGENT</code> that has generated the
+annotation.  This may include either an individual who created the specific annotation,
+or a set of annotations generated programatically.  The <code>AGENT</code> can be
+identified using the <code>AGENTTYPE</code>.</p>
+<h3 id="sample-query_1">Sample Query<a class="headerlink" href="#sample-query_1" title="Permanent link">&para;</a></h3>
+<pre><code class="language-coffeescript">  # Search for all code repositories linked to a database:
+  MATCH (n:OBJECT)-[:isType]-(:TYPE {type:&quot;schema:Article&quot;})
+            WHERE n.doi CONTAINS &quot;10.1002/ecy.2856&quot;
+            MATCH (o:OBJECT)-[:isType]-(:TYPE {type:&quot;schema:CodeRepository&quot;})
+            WITH n, o
+            MATCH p=(n)-[]-(:ANNOTATION)-[:Target]-(o)
+            RETURN p
+            LIMIT 10
+</code></pre>
+<h2 id="text-to-dataset-connections">Text-to-Dataset Connections<a class="headerlink" href="#text-to-dataset-connections" title="Permanent link">&para;</a></h2>
+<p>Research papers contain detailed methodologies that are supported by peer reviewed
+literature.  This supporting information may be lost when users rely only on
+the code.  By linking code in code repositories to published articles, and the
+published articles to the code repositories, we make both more discoverable, and
+provide a clear link, and attribution to the citation itself.</p>
+<p><img alt="" src="../db_dataset.svg" /></p>
+<p>Using <code>schema:Dataset</code> <code>OBJECT</code> nodes we can create an annotation that
+links to a <code>TextualBody</code> <code>OBJECT</code>.  The <code>ANNOTATION</code> node
+identifies the link between the two records.  This last object has an explanation
+of why the annotation was made.</p>
+<p>The annotation includes information about the <code>AGENT</code> that has generated the
+annotation.  This may include either an individual who created the specific annotation,
+or a set of annotations generated programatically.  The <code>AGENT</code> can be
+identified using the <code>AGENTTYPE</code>.</p>
+<h2 id="credit-tracking">Credit Tracking<a class="headerlink" href="#credit-tracking" title="Permanent link">&para;</a></h2></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
