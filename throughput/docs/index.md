@@ -4,4 +4,4 @@
 
 This is documentation for the Throughput Database proper.  It documents the ways in which the database is built and the node and relationship types within the database.
 
-![](./images/keyword_schema.svg)
+![](./images/SplashGraph.svg)

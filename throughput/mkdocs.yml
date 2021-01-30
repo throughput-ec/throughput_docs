@@ -7,12 +7,12 @@ site_author: Simon Goring
 markdown_extensions:
     - toc:
         permalink: True
-
 nav:
   - Home: index.md
   - 'Data Elements':
     - OBJECTs: nodes/objects.md
-    - Keywords: keywords/keywords.md
+    - TYPEs: types/types.md
+    - KEYWORDs: keywords/keywords.md
   - 'Data Models': models/data_models.md
 
 theme:
