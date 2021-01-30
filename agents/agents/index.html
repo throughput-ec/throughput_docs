@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Simon Goring">
-        <link rel="canonical" href="http://throughput-ec.github.io/throughput_docs/nodes/objects/">
+        <link rel="canonical" href="http://throughput-ec.github.io/throughput_docs/agents/agents/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>OBJECTs - Throughput Documentation</title>
+        <title>AGENTs - Throughput Documentation</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -43,7 +43,7 @@
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="./" class="dropdown-item active">OBJECTs</a>
+    <a href="../../nodes/objects/" class="dropdown-item">OBJECTs</a>
 </li>
                                     
 <li>
@@ -55,7 +55,7 @@
 </li>
                                     
 <li>
-    <a href="../../agents/agents/" class="dropdown-item">AGENTs</a>
+    <a href="./" class="dropdown-item active">AGENTs</a>
 </li>
                                 </ul>
                             </li>
@@ -71,17 +71,17 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" href="../.." class="nav-link">
+                                <a rel="prev" href="../../keywords/keywords/" class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="../../types/types/" class="nav-link">
+                                <a rel="next" href="../../models/data_models/" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="https://github.com/throughput-ec/throughput_docs/edit/master/docs/nodes/objects.md" class="nav-link">Edit on Github</a>
+                                <a href="https://github.com/throughput-ec/throughput_docs/edit/master/docs/agents/agents.md" class="nav-link">Edit on Github</a>
                             </li>
                     </ul>
                 </div>
@@ -101,7 +101,16 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#objects" class="nav-link">OBJECTs</a>
+            <li class="nav-item" data-level="1"><a href="#agents" class="nav-link">AGENTs</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#matching-agents" class="nav-link">Matching AGENTs</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#agenttypes" class="nav-link">AGENTTYPEs</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -110,34 +119,25 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="objects">OBJECTs<a class="headerlink" href="#objects" title="Permanent link">&para;</a></h1>
-<p>Objects are the powerhouse of Throughput.  They are the elements that are linked
-by annotations.  The main object classes in Throughput are grants, code repositories
-and databases.  Objects are defined by <code>TYPE</code> classes.  A <code>TYPE</code>
-is defined either through the types defined in the W3C Annotation documentation, or
-by a set of definitions from <a href="http://schema.org/">schema.org</a>.</p>
-<p>All objects have a unique ID (imposed by neo4j), and may have a second ID that is defined by the object type.</p>
-<p><img alt="" src="../SimpleObject.svg" /></p>
-<p>An <code>OBJECT</code> in the database may be connected to a <code>TYPE</code> (<code>isType</code>) or an ANNOTATION (<code>Body</code> or <code>Target</code>).</p>
-<h3 id="matching-objects">Matching Objects<a class="headerlink" href="#matching-objects" title="Permanent link">&para;</a></h3>
-<p>An <code>OBJECT</code> may have one or more properties, not all <code>OBJECT</code>s have the same properties.  For example, a <code>TextualBody</code> object will (most likely) not have a <code>doi</code> associated with it.  Some common properties of <code>OBJECT</code>s are <code>url</code>s, <code>id</code>s, and <code>name</code> elements.  A simple <code>OBJECT</code> match may be:</p>
-<pre><code>MATCH (o:OBJECT)
-WHERE o.name CONTAINS('Neotoma')
-RETURN o
+<h1 id="agents">AGENTs<a class="headerlink" href="#agents" title="Permanent link">&para;</a></h1>
+<p><img alt="" src="../AgentGraph.svg" /></p>
+<p>Agents are the people or things that do the work of creating <code>ANNOTATION</code>s in the Throughput Annotation Database.  An agent may be a person, software, an organization, or may be another <code>AGENTTYPE</code> that is either undefined, or that is to be implemented.  An agent can <code>Create</code> or <code>Generate</code> an annotation.  The difference being that <code>Generated</code> annotations are programmatically produced, and as such should be limited to <code>AGENT</code>s with the <code>AGENTTYPE</code> property <code>{type:SoftwareAgent}</code>.</p>
+<p>We can search for <code>ANNOTATION</code>s generated by specific <code>AGENT</code>s, or that reference <code>OBJECTS</code> associated with individuals or pieces of software.  For example, we may want to find all annotations generated by the Throughput Widget API, or all annotations by a graduate student who had been working with a particular database.</p>
+<h2 id="matching-agents">Matching <code>AGENT</code>s<a class="headerlink" href="#matching-agents" title="Permanent link">&para;</a></h2>
+<p>Matching an <code>AGENT</code> is fairly straightforward.  We can match:</p>
+<pre><code>MATCH (ag:AGENT)
+WHERE ag.name CONTAINS('Simon')
+RETURN properties(ag)
 </code></pre>
-<h3 id="constraints-indexes">Constraints &amp; Indexes<a class="headerlink" href="#constraints-indexes" title="Permanent link">&para;</a></h3>
-<p>Object ids must be unique &amp; are indexed:</p>
-<pre><code>  CREATE CONSTRAINT ON (o:OBJECT) ASSERT o.id IS UNIQUE;
-  CREATE INDEX objName FOR (n:OBJECT) ON (n.name)
+<p>At the time of writing, this returns 360 separate records of individuals.  From that point we can make more complex queries, for example, counting the number of annotations each of those individuals is associated with:</p>
+<pre><code>MATCH (ag:AGENT)
+WHERE ag.name CONTAINS('Simon')
+WITH ag
+MATCH (ag)-[:Created]-&gt;(an:ANNOTATION)
+RETURN ag.name, COUNT(DISTINCT an)
 </code></pre>
-<p>Object names are indexed</p>
-<pre><code>  CREATE INDEX objName FOR (n:OBJECT) ON (n.name)
-</code></pre>
-<p>There is a fulltext index on the <code>name</code> and <code>description</code>:</p>
-<pre><code>  CALL db.index.fulltext.createNodeIndex(&quot;nameAndDesc&quot;,
-                                         [&quot;OBJECT&quot;],
-                                         [&quot;name&quot;, &quot;description&quot;])
-</code></pre></div>
+<p>At this time, only one individual named <code>Simon</code> has contributed annotations.</p>
+<h1 id="agenttypes">AGENTTYPEs<a class="headerlink" href="#agenttypes" title="Permanent link">&para;</a></h1></div>
             </div>
         </div>
 
