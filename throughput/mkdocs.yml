@@ -1,5 +1,5 @@
 site_name: Throughput Documentation
-site_url: http://throughputdb.com/docs
+site_url: http://throughput-ec.github.io/throughput_docs
 repo_url: https://github.com/throughput-ec/throughput_docs
 repo_name: Github
 site_author: Simon Goring
@@ -13,6 +13,7 @@ nav:
     - OBJECTs: nodes/objects.md
     - TYPEs: types/types.md
     - KEYWORDs: keywords/keywords.md
+    - AGENTs: agents/agents.md
   - 'Data Models': models/data_models.md
 
 theme:
