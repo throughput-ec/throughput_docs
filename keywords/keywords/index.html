@@ -8,7 +8,7 @@
         <meta name="author" content="Simon Goring">
         <link rel="canonical" href="http://throughputdb.com/docs/keywords/keywords/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Keywords - Throughput Documentation</title>
+        <title>KEYWORDs - Throughput Documentation</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -47,7 +47,11 @@
 </li>
                                     
 <li>
-    <a href="./" class="dropdown-item active">Keywords</a>
+    <a href="../../types/types/" class="dropdown-item">TYPEs</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">KEYWORDs</a>
 </li>
                                 </ul>
                             </li>
@@ -63,7 +67,7 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" href="../../nodes/objects/" class="nav-link">
+                                <a rel="prev" href="../../types/types/" class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
@@ -95,6 +99,10 @@
             
             <li class="nav-item" data-level="1"><a href="#keywords" class="nav-link">KEYWORDs</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#matching-keywords" class="nav-link">Matching Keywords</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#synonymy" class="nav-link">SYNONYMY</a>
               <ul class="nav flex-column">
               </ul>
@@ -109,19 +117,35 @@
 <h1 id="keywords">KEYWORDs<a class="headerlink" href="#keywords" title="Permanent link">&para;</a></h1>
 <p>A <code>KEYWORD</code> can be associated with any <code>ANNOTATION</code>.  A common use would be to
 help discover an <code>OBJECT</code> associated with a keyword such as <em>climate</em> or <em>cheese</em>.
-Keywords could be associated with an <code>AGENT</code> or any other node type, but a <code>KEYWORD</code> is always connected through an <code>ANNOTATION</code>.
-In this way, a <code>KEYWORD</code> may be associated with another <code>KEYWORD</code> through a synonymy which would be represented as indicated below.</p>
-<p>FIGURE WITH SYNONYMY</p>
+Keywords could be associated with an <code>AGENT</code> or any other node type, but a <code>KEYWORD</code> is always connected through an <code>ANNOTATION</code>.</p>
+<p><img alt="" src="../KeywordSimple.svg" /></p>
+<p>In this way, a <code>KEYWORD</code> may be associated with another <code>KEYWORD</code> through a synonymy which would be represented as indicated below.</p>
+<h2 id="matching-keywords">Matching Keywords<a class="headerlink" href="#matching-keywords" title="Permanent link">&para;</a></h2>
+<p>We often want to do a simple keyword search.  </p>
+<pre><code>MATCH (k:KEYWORD {keyword: $userkw})
+MATCH (k)&lt;-[:hasKeyword]-(a:ANNOTATION)
+MATCH (a)-[:Target]-&gt;(ob:OBJECT)
+MATCH (ob)-[:isType]-&gt;(ty:TYPE)
+MATCH (a)-[:Body]-&gt;(obb:OBJECT)
+RETURN properties(ob), ty.type, obb.value
+</code></pre>
+<p>This returns all objects (of any kind) associated with that keyword, the type of object (<code>ty.type</code>), and then the annotation text used to create the keyword link.  It may be that some keywords come from an authority (for example, the database or code repository has defined them directly), and others may have been added by a Throughput user.</p>
+<p>Each <code>ANNOTATION</code> is tagged by the <code>AGENT</code> who <code>Created</code> the annotation, and the <code>AGENT</code> (most commonly a <code>SoftwareAgent</code>) who <code>Generated</code> the <code>ANNOTATION</code>.  This means we can also filter by <code>AGENT</code> or add the <code>AGENT</code> information to the query to get better information about the keyword relation.</p>
 <h2 id="synonymy">SYNONYMY<a class="headerlink" href="#synonymy" title="Permanent link">&para;</a></h2>
-<p>Synonymy is indicated by a relationship <code>isSynonym</code> connected by an <code>ANNOTATION</code>.  This format allows us to have a <code>TextBody</code> <code>OBJECT</code> that contains information about why the synonymy was generated, and the agent who generated that synonymy.</p>
-<p><img alt="" src="keyword_synonym.svg" /></p>
+<p>There are cases where assigned keywords may be too precise, or have spelling errors.  To account for this we can also use a synonymy.  Synonymy is indicated by the relationship <code>isSynonym</code> connecting two <code>KEYWORD</code> elements through an <code>ANNOTATION</code>.  This format allows us to have a <code>TextBody</code> <code>OBJECT</code> that contains information about why the synonymy was generated, and the agent who generated that synonymy.</p>
+<p><img alt="" src="../KeywordSynonym.svg" /></p>
+<h3 id="matching-with-synonyms">Matching with Synonyms<a class="headerlink" href="#matching-with-synonyms" title="Permanent link">&para;</a></h3>
 <p>In this case we can match by:</p>
 <pre><code>MATCH (k:KEYWORD {keyword: $userkw})
   OPTIONAL MATCH (syn:KEYWORD)&lt;-[:isSynonym]-(:ANNOTATION)-[:isSynonym]-&gt;(k)
-  WITH COLLECT(syn) + COLLECT(k) AS kws
-  MATCH (kws)&lt;-[:hasKeyword]-(:ANNOTATION)-[:Target]-&gt;(ob:OBJECT)
+WITH COLLECT(syn) + COLLECT(k) AS kws
+MATCH (kws)&lt;-[:hasKeyword]-(a:ANNOTATION)
+MATCH (a)-[:Target]-&gt;(ob:OBJECT)
+MATCH (ob)-[:isType]-&gt;(ty:TYPE)
+MATCH (a)-[:Body]-&gt;(obb:OBJECT)
+RETURN properties(ob), ty.type, obb.value
 </code></pre>
-<p>This will look for all keywords and keyword synonyms, and then find all objects associated with them.</p></div>
+<p>This will look for all keywords and keyword synonyms, and then find all objects associated with them.  Again, we can filter by <code>TYPE</code>, <code>AGENT</code> or other elements to get a better subset of results.</p></div>
             </div>
         </div>
 

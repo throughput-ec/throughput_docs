@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Simon Goring">
+        <link rel="canonical" href="http://throughputdb.com/docs/types/types/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>TYPEs - Throughput Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/SQL.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Throughput Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Data Elements <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../nodes/objects/" class="dropdown-item">OBJECTs</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">TYPEs</a>
+</li>
+                                    
+<li>
+    <a href="../../keywords/keywords/" class="dropdown-item">KEYWORDs</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../models/data_models/" class="nav-link">Data Models</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../../nodes/objects/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../../keywords/keywords/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/throughput-ec/throughput_docs/edit/master/docs/types/types.md" class="nav-link">Edit on Github</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#types" class="nav-link">TYPEs</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h2 id="types">TYPEs<a class="headerlink" href="#types" title="Permanent link">&para;</a></h2>
+<p><code>TYPE</code> is a property of an <code>OBJECT</code> but in practice it is defined as a separate
+node within the database to allow us to improve the flexibility of the underlying data model.  <code>TYPE</code> nodes are defined either as part of the w3C Annotation model (e.g., <code>{type:'TextualBody'}</code> or using other schema, for example <code>{type:'schema:CodeRepository'}</code>.</p>
+<table>
+<thead>
+<tr>
+<th>type</th>
+<th>n</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>schema:Grant</td>
+<td>467,000</td>
+</tr>
+<tr>
+<td>TextualBody</td>
+<td>356,000</td>
+</tr>
+<tr>
+<td>schema:Article</td>
+<td>159,000</td>
+</tr>
+<tr>
+<td>schema:CodeRepository</td>
+<td>74,000</td>
+</tr>
+<tr>
+<td>schema:DataCatalog</td>
+<td>2,300</td>
+</tr>
+<tr>
+<td>Dataset</td>
+<td>390</td>
+</tr>
+</tbody>
+</table>
+<h3 id="matching-objects-by-type">Matching Objects by Type<a class="headerlink" href="#matching-objects-by-type" title="Permanent link">&para;</a></h3>
+<p>Using the <code>TYPE</code> element we can find (for example) a database using:</p>
+<pre><code>  MATCH (tdb:TYPE {type:'schema:DataCatalog'})
+  MATCH (tdb)&lt;-[:isType]-(n:OBJECT)
+  RETURN n
+  LIMIT 3
+</code></pre>
+<p>The <code>TYPE</code> defining an object also defines some of the properties that the object may have, although these are not embedded as constraints.</p>
+<h3 id="various-types">Various TYPEs<a class="headerlink" href="#various-types" title="Permanent link">&para;</a></h3>
+<h4 id="schemadatacatalog">schema:DataCatalog<a class="headerlink" href="#schemadatacatalog" title="Permanent link">&para;</a></h4>
+<p>Objects defined as data catalogs were initially scraped from <a href="http://re3data.org">re3data.org</a> using a
+script that has been stored on GitHub in a <code>code repository &lt;http://https://github.com/throughput-ec/throughputdb/tree/master/Re3Databases&gt;</code>_.</p>
+<p>The object has properties:</p>
+<ul>
+<li><code>id</code>, which come from the unique identifier (DOI) assigned by re3data.</li>
+<li><code>name</code> is the official name of the database.</li>
+<li><code>url</code> is the URL link for the database.</li>
+<li><code>keywords</code> is an array of terms associated with the database (although see <code>keywords</code>)</li>
+<li><code>description</code> is the description given to the database.</li>
+</ul>
+<p>An object is represented by the cypher statement:</p>
+<pre><code>  (ob:OBJECT {id: &quot;10.17616/R3PD38&quot;,
+              name: &quot;Neotoma Paleoecology Database&quot;,
+              url: &quot;http://neotomadb.org&quot;,
+              keywords: [&quot;paleoenvironments&quot;, &quot;fossil mammals (FAUNMAP)&quot;],
+              description: &quot;Neotoma is a multiproxy paleoecological database that
+              covers the Pliocene-Quaternary . . .&quot;})
+</code></pre>
+<p>Individual databases have keywords associated with them. In some cases keywords
+may be misspelled, or may be either too general ("science") or too specific
+("holocene fossils"). To ensure that keywords can be used effectively we want
+to add them to the graph.</p>
+<p>We do this by creating a special node type (KEYWORD), with the constraint that
+each keyword is unique. Keywords may be related using the :implies relationship.</p>
+<p>Each <code>KEYWORD</code> is related to an <code>OBJECT</code> through annotations.</p>
+<h4 id="schemacoderepository">schema:CodeRepository<a class="headerlink" href="#schemacoderepository" title="Permanent link">&para;</a></h4>
+<p>Objects of type <code>schema:CodeRepository</code> were originally scraped from GitHub, with code that is found in the
+<a href="https://github.com/throughput-ec/github_scrapers">github_scrapers</a> repository.</p>
+<p>The objects have the properties:</p>
+<ul>
+<li><code>id</code> which is the repository assigned ID (a numeric identifier in the case of GitHub)</li>
+<li><code>name</code> The name of the repository is a combination of the repository owner and the repository name.</li>
+<li><code>description</code> A user provided description for the repository.</li>
+<li><code>url</code> The URL for the repository.</li>
+</ul>
+<pre><code>  MERGE (ob:OBJECT {id: 1234456,
+                    url: &quot;http://github.com/SimonGoring/myrepo&quot;,
+                    description: &quot;This repo is the bomb of bombs.&quot;,
+                    name: &quot;SimonGoring/myrepo&quot;})
+</code></pre>
+<p>Code repositories may have keywords assigned, or have keywords defined (topics
+in the terminology of GitHub).  These are linked to KEYWORD objects in the
+database through an ANNOTATION.</p>
+<h4 id="schemaarticle">schema:Article<a class="headerlink" href="#schemaarticle" title="Permanent link">&para;</a></h4>
+<p>A scientific journal article type is a simplification of the <a href="https://gitlab.com/crossref/schema/-/releases/0.1.1">CrossRef data schema v0.1.1</a>.
+The schema for OBJECTs of type <code>schema:Article</code> provides fields for journal, title, author, and URL.  The field <code>id</code> is used for the DOI, to keep a standard of unique IDs in the <code>id</code> field.</p>
+<ul>
+<li><code>id</code> - Unique identifier for grants (assumes NSF grants)</li>
+<li><code>journal</code></li>
+<li><code>title</code></li>
+<li><code>author</code></li>
+<li><code>url</code></li>
+</ul>
+<pre><code>MERGE (award:OBJECT {&quot;journal&quot;: &quot;Risk Analysis&quot;,
+                     &quot;id&quot;: &quot;10.1111/risa.13567&quot;,
+                     &quot;title&quot;: &quot;Protecting From Malware Obfuscation Attacks Through Adversarial Risk Analysis&quot;,
+                     &quot;url&quot;: &quot;https://onlinelibrary.wiley.com/doi/abs/10.1111/risa.13567&quot;,
+                     &quot;authors&quot;: &quot;Redondo, Alberto; Insua, David Ríos&quot;})
+</code></pre>
+<h4 id="schemagrant">schema:Grant<a class="headerlink" href="#schemagrant" title="Permanent link">&para;</a></h4>
+<p>The structure of a grant is (currently) based on the NSF Award schema.  The code to
+obtain the NSF awards and add them to the graph is located within the Throughput
+database <a href="https://github.com/throughput-ec/throughputdb/tree/master/nsf_awards">nsf_award</a>
+module.</p>
+<ul>
+<li><code>AwardID</code> - Unique identifier for grants (assumes NSF grants)</li>
+<li><code>name</code></li>
+<li><code>amount</code></li>
+<li><code>ARRAAmount</code></li>
+<li><code>AwardInstrument</code></li>
+<li><code>description</code></li>
+</ul>
+<pre><code>MERGE (award:OBJECT {AwardID: 1234567,
+                     name: &quot;Award name&quot;,
+                     amount: 12345,
+                     ARRAAmount: 12345,
+                     AwardInstrument = &quot;Award Thing&quot;,
+                     description = &quot;The abstract of our grant proposal.&quot;})
+</code></pre>
+<h3 id="constraints-and-indices">Constraints and Indices<a class="headerlink" href="#constraints-and-indices" title="Permanent link">&para;</a></h3>
+<p>There are no constraints or indices on <code>TYPE</code> nodes.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

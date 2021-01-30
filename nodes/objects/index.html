@@ -47,7 +47,11 @@
 </li>
                                     
 <li>
-    <a href="../../keywords/keywords/" class="dropdown-item">Keywords</a>
+    <a href="../../types/types/" class="dropdown-item">TYPEs</a>
+</li>
+                                    
+<li>
+    <a href="../../keywords/keywords/" class="dropdown-item">KEYWORDs</a>
 </li>
                                 </ul>
                             </li>
@@ -68,7 +72,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="../../keywords/keywords/" class="nav-link">
+                                <a rel="next" href="../../types/types/" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -95,14 +99,6 @@
             
             <li class="nav-item" data-level="1"><a href="#objects" class="nav-link">OBJECTs</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#types" class="nav-link">TYPEs</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#constraints-indexes" class="nav-link">Constraints &amp; Indexes</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
               </ul>
             </li>
         </ul>
@@ -117,97 +113,15 @@ and databases.  Objects are defined by <code>TYPE</code> classes.  A <code>TYPE<
 is defined either through the types defined in the W3C Annotation documentation, or
 by a set of definitions from <a href="http://schema.org/">schema.org</a>.</p>
 <p>All objects have a unique ID (imposed by neo4j), and may have a second ID that is defined by the object type.</p>
-<p><img alt="" src="../objects.svg" /></p>
-<p>An <code>OBJECT</code> in the database may be connected to a TYPE (<code>isType</code>) or an ANNOTATION (<code>body</code> or <code>target</code>).</p>
-<h2 id="types">TYPEs<a class="headerlink" href="#types" title="Permanent link">&para;</a></h2>
-<p><code>TYPE</code> is a property of an <code>OBJECT</code> but in practice it is defined as a separate
-node within the Neo4j database to allow us to improve flexibility of the underlying data model.  As such, we can find (for example) a database using:</p>
-<pre><code>  MATCH (n:OBJECT)-[:isType]-(:TYPE {type:'schema:DataCatalog'})
-  RETURN n
-  LIMIT 3
+<p><img alt="" src="../SimpleObject.svg" /></p>
+<p>An <code>OBJECT</code> in the database may be connected to a <code>TYPE</code> (<code>isType</code>) or an ANNOTATION (<code>Body</code> or <code>Target</code>).</p>
+<h3 id="matching-objects">Matching Objects<a class="headerlink" href="#matching-objects" title="Permanent link">&para;</a></h3>
+<p>An <code>OBJECT</code> may have one or more properties, not all <code>OBJECT</code>s have the same properties.  For example, a <code>TextualBody</code> object will (most likely) not have a <code>doi</code> associated with it.  Some common properties of <code>OBJECT</code>s are <code>url</code>s, <code>id</code>s, and <code>name</code> elements.  A simple <code>OBJECT</code> match may be:</p>
+<pre><code>MATCH (o:OBJECT)
+WHERE o.name CONTAINS('Neotoma')
+RETURN o
 </code></pre>
-<p>The <code>TYPE</code> defining an object also defines some of the properties that the object may have, although these are not embedded as constraints.</p>
-<h3 id="schemadatacatalog">schema:DataCatalog<a class="headerlink" href="#schemadatacatalog" title="Permanent link">&para;</a></h3>
-<p>Objects defined as data catalogs were initially scraped from <a href="http://re3data.org">re3data.org</a> using a
-script that has been stored on GitHub in a <code>code repository &lt;http://https://github.com/throughput-ec/throughputdb/tree/master/Re3Databases&gt;</code>_.</p>
-<p>The object has properties:</p>
-<ul>
-<li><code>id</code>, which come from the unique identifier (DOI) assigned by re3data.</li>
-<li><code>name</code> is the official name of the database.</li>
-<li><code>url</code> is the URL link for the database.</li>
-<li><code>keywords</code> is an array of terms associated with the database (although see <code>keywords</code>)</li>
-<li><code>description</code> is the description given to the database.</li>
-</ul>
-<p>An object is represented by the cypher statement:</p>
-<pre><code>  (ob:OBJECT {id: &quot;10.17616/R3PD38&quot;,
-              name: &quot;Neotoma Paleoecology Database&quot;,
-              url: &quot;http://neotomadb.org&quot;,
-              keywords: [&quot;paleoenvironments&quot;, &quot;fossil mammals (FAUNMAP)&quot;],
-              description: &quot;Neotoma is a multiproxy paleoecological database that
-              covers the Pliocene-Quaternary . . .&quot;})
-</code></pre>
-<p>Individual databases have keywords associated with them. In some cases keywords
-may be misspelled, or may be either too general ("science") or too specific
-("holocene fossils"). To ensure that keywords can be used effectively we want
-to add them to the graph.</p>
-<p>We do this by creating a special node type (KEYWORD), with the constraint that
-each keyword is unique. Keywords may be related using the :implies relationship.</p>
-<p>Each <code>KEYWORD</code> is related to an <code>OBJECT</code> through annotations.</p>
-<h3 id="schemacoderepository">schema:CodeRepository<a class="headerlink" href="#schemacoderepository" title="Permanent link">&para;</a></h3>
-<p>Objects of type <code>schema:CodeRepository</code> were originally scraped from GitHub, with code that is found in the
-<a href="https://github.com/throughput-ec/github_scrapers">github_scrapers</a> repository.</p>
-<p>The objects have the properties:</p>
-<ul>
-<li><code>id</code> which is the repository assigned ID (a numeric identifier in the case of GitHub)</li>
-<li><code>name</code> The name of the repository is a combination of the repository owner and the repository name.</li>
-<li><code>description</code> A user provided description for the repository.</li>
-<li><code>url</code> The URL for the repository.</li>
-</ul>
-<pre><code>  MERGE (ob:OBJECT {id: 1234456,
-                    url: &quot;http://github.com/SimonGoring/myrepo&quot;,
-                    description: &quot;This repo is the bomb of bombs.&quot;,
-                    name: &quot;SimonGoring/myrepo&quot;})
-</code></pre>
-<p>Code repositories may have keywords assigned, or have keywords defined (topics
-in the terminology of GitHub).  These are linked to KEYWORD objects in the
-database through an ANNOTATION.</p>
-<h3 id="schemaarticle">schema:Article<a class="headerlink" href="#schemaarticle" title="Permanent link">&para;</a></h3>
-<p>A scientific journal article type is a simplification of the <a href="https://gitlab.com/crossref/schema/-/releases/0.1.1">CrossRef data schema v0.1.1</a>.
-The schema for OBJECTs of type <code>schema:Article</code> provides fields for journal, title, author, and URL.  The field <code>id</code> is used for the DOI, to keep a standard of unique IDs in the <code>id</code> field.</p>
-<ul>
-<li><code>id</code> - Unique identifier for grants (assumes NSF grants)</li>
-<li><code>journal</code></li>
-<li><code>title</code></li>
-<li><code>author</code></li>
-<li><code>url</code></li>
-</ul>
-<pre><code>MERGE (award:OBJECT {&quot;journal&quot;: &quot;Risk Analysis&quot;,
-                     &quot;id&quot;: &quot;10.1111/risa.13567&quot;,
-                     &quot;title&quot;: &quot;Protecting From Malware Obfuscation Attacks Through Adversarial Risk Analysis&quot;,
-                     &quot;url&quot;: &quot;https://onlinelibrary.wiley.com/doi/abs/10.1111/risa.13567&quot;,
-                     &quot;authors&quot;: &quot;Redondo, Alberto; Insua, David Ríos&quot;})
-</code></pre>
-<h3 id="schemagrant">schema:Grant<a class="headerlink" href="#schemagrant" title="Permanent link">&para;</a></h3>
-<p>The structure of a grant is (currently) based on the NSF Award schema.  The code to
-obtain the NSF awards and add them to the graph is located within the Throughput
-database <a href="https://github.com/throughput-ec/throughputdb/tree/master/nsf_awards">nsf_award</a>
-module.</p>
-<ul>
-<li><code>AwardID</code> - Unique identifier for grants (assumes NSF grants)</li>
-<li><code>name</code></li>
-<li><code>amount</code></li>
-<li><code>ARRAAmount</code></li>
-<li><code>AwardInstrument</code></li>
-<li><code>description</code></li>
-</ul>
-<pre><code>MERGE (award:OBJECT {AwardID: 1234567,
-                     name: &quot;Award name&quot;,
-                     amount: 12345,
-                     ARRAAmount: 12345,
-                     AwardInstrument = &quot;Award Thing&quot;,
-                     description = &quot;The abstract of our grant proposal.&quot;})
-</code></pre>
-<h2 id="constraints-indexes">Constraints &amp; Indexes<a class="headerlink" href="#constraints-indexes" title="Permanent link">&para;</a></h2>
+<h3 id="constraints-indexes">Constraints &amp; Indexes<a class="headerlink" href="#constraints-indexes" title="Permanent link">&para;</a></h3>
 <p>Object ids must be unique &amp; are indexed:</p>
 <pre><code>  CREATE CONSTRAINT ON (o:OBJECT) ASSERT o.id IS UNIQUE;
   CREATE INDEX objName FOR (n:OBJECT) ON (n.name)

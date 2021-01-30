@@ -10,9 +10,9 @@ Welcome to Throughput Database's documentation!
    :maxdepth: 3
 
    nodes/objects.rst
+   types/types.rst
    keywords/keywords.rst
    models/data_models.rst
-
 
 Indices and tables
 ==================
