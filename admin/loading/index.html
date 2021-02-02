@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Simon Goring">
-        <link rel="canonical" href="http://throughput-ec.github.io/throughput_docs/nodes/objects/">
+        <link rel="canonical" href="http://throughput-ec.github.io/throughput_docs/admin/loading/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>OBJECTs - Throughput Documentation</title>
+        <title>Installing - Throughput Documentation</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -38,21 +38,21 @@
                             <li class="navitem">
                                 <a href="../.." class="nav-link">Home</a>
                             </li>
-                            <li class="dropdown">
+                            <li class="dropdown active">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Administrative <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="../../admin/loading/" class="dropdown-item">Installing</a>
+    <a href="./" class="dropdown-item active">Installing</a>
 </li>
                                 </ul>
                             </li>
-                            <li class="dropdown active">
+                            <li class="dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Data Elements <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="./" class="dropdown-item active">OBJECTs</a>
+    <a href="../../nodes/objects/" class="dropdown-item">OBJECTs</a>
 </li>
                                     
 <li>
@@ -80,17 +80,17 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" href="../../admin/loading/" class="nav-link">
+                                <a rel="prev" href="../.." class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="../../types/types/" class="nav-link">
+                                <a rel="next" href="../../nodes/objects/" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="https://github.com/throughput-ec/throughput_docs/edit/master/docs/nodes/objects.md" class="nav-link">Edit on Github</a>
+                                <a href="https://github.com/throughput-ec/throughput_docs/edit/master/docs/admin/loading.md" class="nav-link">Edit on Github</a>
                             </li>
                     </ul>
                 </div>
@@ -110,8 +110,16 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#objects" class="nav-link">OBJECTs</a>
+            <li class="nav-item" data-level="1"><a href="#cloning-the-throughput-database" class="nav-link">Cloning the Throughput Database</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#download-the-file" class="nav-link">Download the File</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#using-neo4j-desktop" class="nav-link">Using neo4j Desktop</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -119,34 +127,31 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="objects">OBJECTs<a class="headerlink" href="#objects" title="Permanent link">&para;</a></h1>
-<p>Objects are the powerhouse of Throughput.  They are the elements that are linked
-by annotations.  The main object classes in Throughput are grants, code repositories
-and databases.  Objects are defined by <code>TYPE</code> classes.  A <code>TYPE</code>
-is defined either through the types defined in the W3C Annotation documentation, or
-by a set of definitions from <a href="http://schema.org/">schema.org</a>.</p>
-<p>All objects have a unique ID (imposed by neo4j), and may have a second ID that is defined by the object type.  NOTE:  The parameter <code>id</code> associated with some <code>OBJECT</code> nodes is not the same as the values obtained using the cypher statement <code>id(node)</code>.  Using <code>id(node)</code> returns the internal identity value for the node as implemented by neo4j.  </p>
-<p><img alt="" src="../SimpleObject.svg" /></p>
-<p>An <code>OBJECT</code> in the database may be connected to a <code>TYPE</code> (<code>isType</code>) or an ANNOTATION (<code>Body</code> or <code>Target</code>).</p>
-<h3 id="matching-objects">Matching Objects<a class="headerlink" href="#matching-objects" title="Permanent link">&para;</a></h3>
-<p>An <code>OBJECT</code> may have one or more properties, not all <code>OBJECT</code>s have the same properties.  For example, a <code>TextualBody</code> object will (most likely) not have a <code>doi</code> associated with it.  Some common properties of <code>OBJECT</code>s are <code>url</code>s, <code>id</code>s, and <code>name</code> elements.  A simple <code>OBJECT</code> match may be:</p>
-<pre><code>MATCH (o:OBJECT)
-WHERE o.name CONTAINS('Neotoma')
-RETURN o
+<h1 id="cloning-the-throughput-database">Cloning the Throughput Database<a class="headerlink" href="#cloning-the-throughput-database" title="Permanent link">&para;</a></h1>
+<p>The Throughput Database is a live database, that is continually updated with user-created annotations and operations that clean and optimize the graph structure.  Database snapshots are made available on a semi-regular basis and can be accessed through the <a href="https://doi.org/10.6084/m9.figshare.c.5075912.v1">Throughput Snapshot Collection</a> on figShare.</p>
+<h2 id="download-the-file">Download the File<a class="headerlink" href="#download-the-file" title="Permanent link">&para;</a></h2>
+<p>The Throughput snapshots are saved as <code>tar.gz</code> compressed files.  A number of programs exist to unzip these files on Windows, Mac or Linux operating systems.  Select one of the snapshots within the <a href="https://doi.org/10.6084/m9.figshare.c.5075912.v1">Collection</a> and download the file to your computer.</p>
+<p><img alt="" src="../downloadFile.png" /></p>
+<h2 id="using-neo4j-desktop">Using neo4j Desktop<a class="headerlink" href="#using-neo4j-desktop" title="Permanent link">&para;</a></h2>
+<p>The file within the <code>tar.gz</code> archive is a <a href="https://neo4j.com/docs/operations-manual/current/tools/dump-load/">neo4j dump file</a>.  If you do not have neo4j installed, you must do that first (see <a href="https://neo4j.com/docs/operations-manual/current/installation/">Installing neo4j</a>).</p>
+<p>Once neo4j is installed:</p>
+<ol>
+<li>Start <strong>Neo4j desktop</strong> and create a new local database.</li>
+<li>Click on the <code>...</code> icon on the top right of the database panel, and select <strong>Manage</strong>.</li>
+<li>Click the "Open Folder" button to open the directory of the database.</li>
+<li>Move the <code>.dump</code> file to this directory.</li>
+<li>In the <strong>Manage</strong> window, click the <strong>Open Terminal</strong> button.</li>
+<li>In the terminal, use the following command:</li>
+</ol>
+<pre><code>bin/neo4j-admin load --from=&lt;archive-path&gt; --database=&lt;database-name&gt; --force
 </code></pre>
-<h3 id="constraints-indexes">Constraints &amp; Indexes<a class="headerlink" href="#constraints-indexes" title="Permanent link">&para;</a></h3>
-<p>Object ids must be unique &amp; are indexed:</p>
-<pre><code>  CREATE CONSTRAINT ON (o:OBJECT) ASSERT o.id IS UNIQUE;
-  CREATE INDEX objName FOR (n:OBJECT) ON (n.name)
+<p>Where the <code>&lt;archive-path&gt;</code> is the full path of the <code>.dump</code> file and <code>&lt;database-name&gt;</code> is the name of the new database that you created.  There may be some difference between Windows and Linux-based operating systems in the use of forward and backslashes.  If you are running into problems, you can try:</p>
+<pre><code>bin\neo4j-admin load --from=data/backups/neo4j.dump --database=neo4j --force
 </code></pre>
-<p>Object names are indexed</p>
-<pre><code>  CREATE INDEX objName FOR (n:OBJECT) ON (n.name)
-</code></pre>
-<p>There is a fulltext index on the <code>name</code> and <code>description</code>:</p>
-<pre><code>  CALL db.index.fulltext.createNodeIndex(&quot;nameAndDesc&quot;,
-                                         [&quot;OBJECT&quot;],
-                                         [&quot;name&quot;, &quot;description&quot;])
-</code></pre></div>
+<ol>
+<li>Start the database. It should populate with the data.</li>
+</ol>
+<p><img alt="" src="../narrowGraphs.png" /></p></div>
             </div>
         </div>
 

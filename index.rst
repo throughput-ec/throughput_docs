@@ -12,6 +12,7 @@ Welcome to Throughput Database's documentation!
    nodes/objects.rst
    types/types.rst
    keywords/keywords.rst
+   admin/loading.rst
    models/data_models.rst
 
 Indices and tables
