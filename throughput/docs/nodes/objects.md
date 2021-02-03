@@ -6,7 +6,7 @@ and databases.  Objects are defined by `TYPE` classes.  A `TYPE`
 is defined either through the types defined in the W3C Annotation documentation, or
 by a set of definitions from [schema.org](http://schema.org/).
 
-All objects have a unique ID (imposed by neo4j), and may have a second ID that is defined by the object type.
+All objects have a unique ID (imposed by neo4j), and may have a second ID that is defined by the object type.  NOTE:  The parameter `id` associated with some `OBJECT` nodes is not the same as the values obtained using the cypher statement `id(node)`.  Using `id(node)` returns the internal identity value for the node as implemented by neo4j.  
 
 ![](SimpleObject.svg)
 

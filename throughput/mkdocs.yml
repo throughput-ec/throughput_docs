@@ -9,6 +9,8 @@ markdown_extensions:
         permalink: True
 nav:
   - Home: index.md
+  - 'Administrative':
+    - Installing: admin/loading.md
   - 'Data Elements':
     - OBJECTs: nodes/objects.md
     - TYPEs: types/types.md
