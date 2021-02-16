@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Simon Goring">
-        <link rel="canonical" href="http://throughput-ec.github.io/throughput_docs/keywords/keywords/">
+        <link rel="canonical" href="http://throughput-ec.github.io/throughput_docs/models/annotation/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>KEYWORDs - Throughput Documentation</title>
+        <title>Annotations - Throughput Documentation</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -47,7 +47,7 @@
 </li>
                                 </ul>
                             </li>
-                            <li class="dropdown active">
+                            <li class="dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Data Elements <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
@@ -60,7 +60,7 @@
 </li>
                                     
 <li>
-    <a href="./" class="dropdown-item active">KEYWORDs</a>
+    <a href="../../keywords/keywords/" class="dropdown-item">KEYWORDs</a>
 </li>
                                     
 <li>
@@ -68,16 +68,16 @@
 </li>
                                 </ul>
                             </li>
-                            <li class="dropdown">
+                            <li class="dropdown active">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Data Models <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="../../models/data_models/" class="dropdown-item">Data Models</a>
+    <a href="../data_models/" class="dropdown-item">Data Models</a>
 </li>
                                     
 <li>
-    <a href="../../models/annotation/" class="dropdown-item">Annotations</a>
+    <a href="./" class="dropdown-item active">Annotations</a>
 </li>
                                 </ul>
                             </li>
@@ -90,17 +90,17 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" href="../../types/types/" class="nav-link">
+                                <a rel="prev" href="../data_models/" class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="../../agents/agents/" class="nav-link">
+                                <a rel="next" class="nav-link disabled">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="https://github.com/throughput-ec/throughput_docs/edit/master/docs/keywords/keywords.md" class="nav-link">Edit on Github</a>
+                                <a href="https://github.com/throughput-ec/throughput_docs/edit/master/docs/models/annotation.md" class="nav-link">Edit on Github</a>
                             </li>
                     </ul>
                 </div>
@@ -120,13 +120,9 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#keywords" class="nav-link">KEYWORDs</a>
+            <li class="nav-item" data-level="1"><a href="#new-annotations" class="nav-link">New Annotations</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#matching-keywords" class="nav-link">Matching Keywords</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#synonymy" class="nav-link">SYNONYMY</a>
+            <li class="nav-item" data-level="2"><a href="#annotating-a-dataset" class="nav-link">Annotating a Dataset</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -137,38 +133,17 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="keywords">KEYWORDs<a class="headerlink" href="#keywords" title="Permanent link">&para;</a></h1>
-<p>A <code>KEYWORD</code> can be associated with any <code>ANNOTATION</code>.  A common use would be to
-help discover an <code>OBJECT</code> associated with a keyword such as <em>climate</em> or <em>cheese</em>.
-Keywords could be associated with an <code>AGENT</code> or any other node type, but a <code>KEYWORD</code> is always connected through an <code>ANNOTATION</code>.</p>
-<p><img alt="" src="../KeywordSimple.svg" /></p>
-<p>In this way, a <code>KEYWORD</code> may be associated with another <code>KEYWORD</code> through a synonymy which would be represented as indicated below.</p>
-<h2 id="matching-keywords">Matching Keywords<a class="headerlink" href="#matching-keywords" title="Permanent link">&para;</a></h2>
-<p>We often want to do a simple keyword search.  </p>
-<pre><code>MATCH (k:KEYWORD {keyword: $userkw})
-MATCH (k)&lt;-[:hasKeyword]-(a:ANNOTATION)
-MATCH (a)-[:Target]-&gt;(ob:OBJECT)
-MATCH (ob)-[:isType]-&gt;(ty:TYPE)
-MATCH (a)-[:Body]-&gt;(obb:OBJECT)
-RETURN properties(ob), ty.type, obb.value
+<h1 id="new-annotations">New Annotations<a class="headerlink" href="#new-annotations" title="Permanent link">&para;</a></h1>
+<p>New annotations can be added by users using an API.  We can add annotations in several ways.  A user can use the <a href="">Throughput Widget</a> on a data repository website to annotate a particular data object, or dataset.  An individual may add an annotation to link a data repository to a particular code repository, or may create an annotation that adds additional information to a particular element within the Throughput annotation graph (for example, a description, keyword or subject to an object).</p>
+<h2 id="annotating-a-dataset">Annotating a Dataset<a class="headerlink" href="#annotating-a-dataset" title="Permanent link">&para;</a></h2>
+<h3 id="curl-request">curl Request<a class="headerlink" href="#curl-request" title="Permanent link">&para;</a></h3>
+<pre><code>curl -d '{dbid: 'r3d0000000', orcid: '0000-0000-0000-000X', additionalType: 'doi', id: '10.00000/00000000', body: 'This dataset is considered to be an outlier in Akenbata et al., 2021', token: 'XXXXXXX'}' -H 'Content-Type: application/json' https://throughputdb.com/api/widget
 </code></pre>
-<p>This returns all objects (of any kind) associated with that keyword, the type of object (<code>ty.type</code>), and then the annotation text used to create the keyword link.  It may be that some keywords come from an authority (for example, the database or code repository has defined them directly), and others may have been added by a Throughput user.</p>
-<p>Each <code>ANNOTATION</code> is tagged by the <code>AGENT</code> who <code>Created</code> the annotation, and the <code>AGENT</code> (most commonly a <code>SoftwareAgent</code>) who <code>Generated</code> the <code>ANNOTATION</code>.  This means we can also filter by <code>AGENT</code> or add the <code>AGENT</code> information to the query to get better information about the keyword relation.</p>
-<h2 id="synonymy">SYNONYMY<a class="headerlink" href="#synonymy" title="Permanent link">&para;</a></h2>
-<p>There are cases where assigned keywords may be too precise, or have spelling errors.  To account for this we can also use a synonymy.  Synonymy is indicated by the relationship <code>isSynonym</code> connecting two <code>KEYWORD</code> elements through an <code>ANNOTATION</code>.  This format allows us to have a <code>TextBody</code> <code>OBJECT</code> that contains information about why the synonymy was generated, and the agent who generated that synonymy.</p>
-<p><img alt="" src="../KeywordSynonym.svg" /></p>
-<h3 id="matching-with-synonyms">Matching with Synonyms<a class="headerlink" href="#matching-with-synonyms" title="Permanent link">&para;</a></h3>
-<p>In this case we can match by:</p>
-<pre><code>MATCH (k:KEYWORD {keyword: $userkw})
-  OPTIONAL MATCH (syn:KEYWORD)&lt;-[:isSynonym]-(:ANNOTATION)-[:isSynonym]-&gt;(k)
-WITH COLLECT(syn) + COLLECT(k) AS kws
-MATCH (kws)&lt;-[:hasKeyword]-(a:ANNOTATION)
-MATCH (a)-[:Target]-&gt;(ob:OBJECT)
-MATCH (ob)-[:isType]-&gt;(ty:TYPE)
-MATCH (a)-[:Body]-&gt;(obb:OBJECT)
-RETURN properties(ob), ty.type, obb.value
-</code></pre>
-<p>This will look for all keywords and keyword synonyms, and then find all objects associated with them.  Again, we can filter by <code>TYPE</code>, <code>AGENT</code> or other elements to get a better subset of results.</p></div>
+<p>The dataset annotation API is a <code>POST</code> method that accepts the following parameters:
+<code>dbid</code>, the unique database identifier; <code>orcid</code>, the user ORCID (for the user making the request), <code>additionalType</code>, this is a parameter that is implemented by the database on which the user is making the <code>POST</code> request, to identify at which level the annotation is being made, this is to account for potentially overlapping identifiers; <code>id</code>, the object identifier, associated with the <code>additionalType</code> and <code>dbid</code>; <code>body</code>, the text that us to be used to annotate the object, for example, <em>"This dataset is considered to be an outlier in Akenbata et al., 2021"</em>; <code>token</code>, the unique alphanumeric token that is associated with a particular database for use with the Annotation Widget.</p>
+<p><img alt="" src="../DatasetAnnotation.svg" /></p>
+<p>In the figure above we can see that there are two <code>AGENT</code> elements, one is the Widget software that was used to post the annotation, and the particular instance of this widget is identified by the token passed in the <code>POST</code> request.  The second <code>AGENT</code> is the individual making the annotation, identified using their ORCID.  The <code>OBJECT</code> of <code>TYPE</code> <code>Dataset</code> is <code>Contain</code>ed within the <code>OBJECT</code> of <code>TYPE</code> <code>schema:DataCatalog</code>, identified by the <code>dbid</code> passed to the <code>POST</code> method.</p>
+<p>The API call thus accounts for all elements needed to generate the graph for this particular annotation.</p></div>
             </div>
         </div>
 

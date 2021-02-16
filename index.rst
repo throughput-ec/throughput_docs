@@ -14,6 +14,7 @@ Welcome to Throughput Database's documentation!
    keywords/keywords.rst
    admin/loading.rst
    models/data_models.rst
+   models/annotation.rst
 
 Indices and tables
 ==================
