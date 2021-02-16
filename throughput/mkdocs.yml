@@ -16,7 +16,10 @@ nav:
     - TYPEs: types/types.md
     - KEYWORDs: keywords/keywords.md
     - AGENTs: agents/agents.md
-  - 'Data Models': models/data_models.md
+  - 'Data Models':
+    - 'Data Models': models/data_models.md
+    - Annotations: models/annotation.md
+
 
 theme:
   name: mkdocs
