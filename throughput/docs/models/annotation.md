@@ -18,3 +18,11 @@ The dataset annotation API is a `POST` method that accepts the following paramet
 In the figure above we can see that there are two `AGENT` elements, one is the Widget software that was used to post the annotation, and the particular instance of this widget is identified by the token passed in the `POST` request.  The second `AGENT` is the individual making the annotation, identified using their ORCID.  The `OBJECT` of `TYPE` `Dataset` is `Contain`ed within the `OBJECT` of `TYPE` `schema:DataCatalog`, identified by the `dbid` passed to the `POST` method.
 
 The API call thus accounts for all elements needed to generate the graph for this particular annotation.
+
+## DeepDive Annotations
+
+Tools used to extract text from full text documents can store records in the Throughput graph.  This allows the document identifiers (e.g., DOIs) to then be linked to then be linked to the metadata extraction.  For example, a database could build metadata stubs for dataset entries based on prior extraction from full-text documents.  By then searching the graph for these annotations (using the DOI) some data entry can then be automated.
+
+![](DeepDiveExtraction.svg)
+
+In this instance spatial information is extracted from a publication (`OBJECT` with `TYPE` `schema:Article`).  The annotation is placed in a `TextualBody`, however, **this may not be the most appropriate data model**.  We will continue this discussion as the project develops.

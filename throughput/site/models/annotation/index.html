@@ -126,6 +126,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#deepdive-annotations" class="nav-link">DeepDive Annotations</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -143,7 +147,11 @@
 <code>dbid</code>, the unique database identifier; <code>orcid</code>, the user ORCID (for the user making the request), <code>additionalType</code>, this is a parameter that is implemented by the database on which the user is making the <code>POST</code> request, to identify at which level the annotation is being made, this is to account for potentially overlapping identifiers; <code>id</code>, the object identifier, associated with the <code>additionalType</code> and <code>dbid</code>; <code>body</code>, the text that us to be used to annotate the object, for example, <em>"This dataset is considered to be an outlier in Akenbata et al., 2021"</em>; <code>token</code>, the unique alphanumeric token that is associated with a particular database for use with the Annotation Widget.</p>
 <p><img alt="" src="../DatasetAnnotation.svg" /></p>
 <p>In the figure above we can see that there are two <code>AGENT</code> elements, one is the Widget software that was used to post the annotation, and the particular instance of this widget is identified by the token passed in the <code>POST</code> request.  The second <code>AGENT</code> is the individual making the annotation, identified using their ORCID.  The <code>OBJECT</code> of <code>TYPE</code> <code>Dataset</code> is <code>Contain</code>ed within the <code>OBJECT</code> of <code>TYPE</code> <code>schema:DataCatalog</code>, identified by the <code>dbid</code> passed to the <code>POST</code> method.</p>
-<p>The API call thus accounts for all elements needed to generate the graph for this particular annotation.</p></div>
+<p>The API call thus accounts for all elements needed to generate the graph for this particular annotation.</p>
+<h2 id="deepdive-annotations">DeepDive Annotations<a class="headerlink" href="#deepdive-annotations" title="Permanent link">&para;</a></h2>
+<p>Tools used to extract text from full text documents can store records in the Throughput graph.  This allows the document identifiers (e.g., DOIs) to then be linked to then be linked to the metadata extraction.  For example, a database could build metadata stubs for dataset entries based on prior extraction from full-text documents.  By then searching the graph for these annotations (using the DOI) some data entry can then be automated.</p>
+<p><img alt="" src="../DeepDiveExtraction.svg" /></p>
+<p>In this instance spatial information is extracted from a publication (<code>OBJECT</code> with <code>TYPE</code> <code>schema:Article</code>).  The annotation is placed in a <code>TextualBody</code>, however, <strong>this may not be the most appropriate data model</strong>.  We will continue this discussion as the project develops.</p></div>
             </div>
         </div>
 
