@@ -149,18 +149,19 @@
 <li>Start <strong>Neo4j desktop</strong> and create a new local database.</li>
 <li>Click on the <code>...</code> icon on the top right of the database panel, and select <strong>Manage</strong>.</li>
 <li>Click the "Open Folder" button to open the directory of the database.</li>
-<li>Move the <code>.dump</code> file to this directory.</li>
+<li>Move the <code>.dump</code> file to an appropriate location in this directory.</li>
 <li>In the <strong>Manage</strong> window, click the <strong>Open Terminal</strong> button.</li>
 <li>In the terminal, use the following command:</li>
 </ol>
 <pre><code>bin/neo4j-admin load --from=&lt;archive-path&gt; --database=&lt;database-name&gt; --force
 </code></pre>
-<p>Where the <code>&lt;archive-path&gt;</code> is the full path of the <code>.dump</code> file and <code>&lt;database-name&gt;</code> is the name of the new database that you created.  There may be some difference between Windows and Linux-based operating systems in the use of forward and backslashes.  If you are running into problems, you can try:</p>
+<p>Where the <code>&lt;archive-path&gt;</code> is the path of the <code>.dump</code> file and <code>&lt;database-name&gt;</code> is the type of the new database that you are loading into (in this case, a <code>neo4j</code> database).  There may be some difference between Windows and Linux-based operating systems in the use of forward and backslashes.  As an example, if I placed the file <code>neo4j.dump</code> into the <code>data/backups</code> directory of the database, I could load it with the following command:</p>
 <pre><code>bin\neo4j-admin load --from=data/backups/neo4j.dump --database=neo4j --force
 </code></pre>
 <ol>
 <li>Start the database. It should populate with the data.</li>
 </ol>
+<p>See also the official Neo4j page on dumping and loading database snapshots <a href="https://neo4j.com/docs/operations-manual/current/tools/dump-load/">here</a>.</p>
 <p><img alt="" src="../narrowGraphs.png" /></p></div>
             </div>
         </div>
