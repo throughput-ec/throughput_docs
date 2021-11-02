@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Simon Goring">
-        <link rel="canonical" href="http://throughput-ec.github.io/throughput_docs/nodes/objects/">
+        <link rel="canonical" href="http://throughput-ec.github.io/throughput_docs/admin/widgets_and_tokens/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>OBJECTs - Throughput Documentation</title>
+        <title>Throughput Widget and Tokens - Throughput Documentation</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -43,16 +43,16 @@
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="../../admin/loading/" class="dropdown-item">Installing</a>
+    <a href="../loading/" class="dropdown-item">Installing</a>
 </li>
                                 </ul>
                             </li>
-                            <li class="dropdown active">
+                            <li class="dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Data Elements <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="./" class="dropdown-item active">OBJECTs</a>
+    <a href="../../nodes/objects/" class="dropdown-item">OBJECTs</a>
 </li>
                                     
 <li>
@@ -90,17 +90,7 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" href="../../admin/loading/" class="nav-link">
-                                    <i class="fa fa-arrow-left"></i> Previous
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a rel="next" href="../../types/types/" class="nav-link">
-                                    Next <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="https://github.com/throughput-ec/throughput_docs/edit/master/docs/nodes/objects.md" class="nav-link">Edit on Github</a>
+                                <a href="https://github.com/throughput-ec/throughput_docs/edit/master/docs/admin/widgets_and_tokens.md" class="nav-link">Edit on Github</a>
                             </li>
                     </ul>
                 </div>
@@ -120,8 +110,12 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#objects" class="nav-link">OBJECTs</a>
+            <li class="nav-item" data-level="1"><a href="#throughput-widget-and-tokens" class="nav-link">Throughput Widget and Tokens</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#direct-github-repository-insertions" class="nav-link">Direct GitHub Repository Insertions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -129,34 +123,9 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="objects">OBJECTs<a class="headerlink" href="#objects" title="Permanent link">&para;</a></h1>
-<p>Objects are the powerhouse of Throughput.  They are the elements that are linked
-by annotations.  The main object classes in Throughput are grants, code repositories
-and databases.  Objects are defined by <code>TYPE</code> classes.  A <code>TYPE</code>
-is defined either through the types defined in the W3C Annotation documentation, or
-by a set of definitions from <a href="http://schema.org/">schema.org</a>.</p>
-<p>All objects have a unique ID (imposed by neo4j), and may have a second ID that is defined by the object type.  NOTE:  The parameter <code>id</code> associated with some <code>OBJECT</code> nodes is not the same as the values obtained using the cypher statement <code>id(node)</code>.  Using <code>id(node)</code> returns the internal identity value for the node as implemented by neo4j.  </p>
-<p><img alt="" src="../SimpleObject.svg" /></p>
-<p>An <code>OBJECT</code> in the database may be connected to a <code>TYPE</code> (<code>isType</code>) or an ANNOTATION (<code>Body</code> or <code>Target</code>).</p>
-<h3 id="matching-objects">Matching Objects<a class="headerlink" href="#matching-objects" title="Permanent link">&para;</a></h3>
-<p>An <code>OBJECT</code> may have one or more properties, not all <code>OBJECT</code>s have the same properties.  For example, a <code>TextualBody</code> object will (most likely) not have a <code>doi</code> associated with it.  Some common properties of <code>OBJECT</code>s are <code>url</code>s, <code>id</code>s, and <code>name</code> elements.  A simple <code>OBJECT</code> match may be:</p>
-<pre><code>MATCH (o:OBJECT)
-WHERE o.name CONTAINS('Neotoma')
-RETURN o
-</code></pre>
-<h3 id="constraints-indexes">Constraints &amp; Indexes<a class="headerlink" href="#constraints-indexes" title="Permanent link">&para;</a></h3>
-<p>Object ids must be unique &amp; are indexed:</p>
-<pre><code>  CREATE CONSTRAINT ON (o:OBJECT) ASSERT o.id IS UNIQUE;
-  CREATE INDEX objName FOR (n:OBJECT) ON (n.name)
-</code></pre>
-<p>Object names are indexed</p>
-<pre><code>  CREATE INDEX objName FOR (n:OBJECT) ON (n.name)
-</code></pre>
-<p>There is a fulltext index on the <code>name</code> and <code>description</code>:</p>
-<pre><code>  CALL db.index.fulltext.createNodeIndex(&quot;nameAndDesc&quot;,
-                                         [&quot;OBJECT&quot;],
-                                         [&quot;name&quot;, &quot;description&quot;])
-</code></pre></div>
+<h1 id="throughput-widget-and-tokens">Throughput Widget and Tokens<a class="headerlink" href="#throughput-widget-and-tokens" title="Permanent link">&para;</a></h1>
+<p>Throughput uses ORCID to ensure user trust within the database.  While any user can access data from Throughput, only users who have been authorized through ORCID can post data to Throughput.  Data can be posted to Throughput in two ways: (1) directly through the <a href="">throughputdb.com</a> website once a user is logged in; and (2) using the API through <code>POST</code> statements.</p>
+<h2 id="direct-github-repository-insertions">Direct GitHub Repository Insertions<a class="headerlink" href="#direct-github-repository-insertions" title="Permanent link">&para;</a></h2></div>
             </div>
         </div>
 
